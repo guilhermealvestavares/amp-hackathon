@@ -1,42 +1,155 @@
+<!--
+  ## Introduction
+
+  [`amp-selector`](/content/amp-dev/documentation/components/reference/amp-selector-v0.1.md) lets the user choose from a list of options. The contents of the options isn't limited to just text.
+-->
+<!-- -->
 <!doctype html>
 <html ⚡>
 <head>
   <meta charset="utf-8">
-  <title></title>
-  <!-- <link rel="canonical" href="index.html"> adicionar canonical certa -->
+  <title>amp-selector</title>
+  <link rel="canonical" href="&lt;% canonical %&gt;">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  
   <script async src="https://cdn.ampproject.org/v0.js"></script>
+  <!-- ## Setup -->
+  <!--
+    Import the `amp-selector` component.
+  -->
+  <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
+  <!--
+    This sample also demonstrates how to combine `amp-selector` with forms ...
+  -->
   <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+  <!--
+    ... and `amp-bind`.
+  -->
   <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
-  
-  <style amp-custom>
-    .container{height:100vh;} .flex-column-center-all{display:flex;justify-content: center;align-items: center;flex-direction: column;}
-    
-  </style>
-  
   <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
-</head>
+  <style amp-custom>
+    :root {
+      --color-primary: #005AF0;
+      --color-text-light: #fff;
 
+      --space-1: .5rem;  /* 8px */
+      --space-2: 1rem;   /* 16px */
+    }
+    .sample-selector:not([disabled]) amp-img[option][selected]:not([disabled]) {
+      outline-color: var(--color-primary);
+      outline-width: 4px;
+    }
+    .sample-selector amp-img,
+    .sample-selector .divider {
+      margin-right: var(--space-2);
+    }
+    /* disables build-in browser highlights */
+    .sample-selector *:focus {
+      outline: none;
+    }
+    .sample-selector[disabled],
+    .sample-selector [disabled] {
+      opacity: 0.5;
+    }
+    .sample-selector .divider {
+      border-right: 2px solid var(--color-primary);
+      height: 60px;
+    }
+    .radio-selector [option][selected] {
+      outline: none;
+    }
+    .radio-selector [option] {
+      display: flex;
+      align-items: center;
+    }
+    .radio-selector [option]:before {
+      transition: background 0.25s ease-in-out;
+      content: "";
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin: var(--space-1);
+      border-radius: 100%;
+      border: solid 1px var(--color-primary);
+    }
+    .radio-selector [option][selected]:before {
+      text-align: center;
+      content: "✓";
+      color: var(--color-text-light);
+      background-color: var(--color-primary);
+    }
+    .sample-selector,
+    .radio-selector,
+    .sample-selector ~ div,
+    .radio-selector ~ div {
+      padding: var(--space-2);
+    }
+    .sample-selector ~ button,
+    .radio-selector ~ button {
+      margin: var(--space-2);
+    }
+
+    .status-1 {
+      border: 1px solid red;
+    }
+  </style>
+</head>
 <body>
-  <!-- Capturar valores de select -->
-  <div class="container flex-column-center-all">
-    <span>_____________  Capturar valores de select _____________ </span>
-    <form>
-      <select name="items-select" on="change:AMP.setState({item: event.value})">
-        <option  value="Milk">Milk</option>
-        <option  value="Chocolate">Chocolate</option>
-        <option  value="Cookies">Cookies</option>
-      </select>
-    </form>
-    <p [text]="'Valor selecionado: ' + item">Valor selecionado:</p>
-    
-      <!-- Capturar valores de input -->
-    <span>_____________  Capturar valores de input _____________ </span>
-    <form>
-      <input type="number" name="items-text" on="change:AMP.setState({itemInput: event.value})">
-    </form>
-    <p [text]="'Valor digitado: ' + itemInput * 3">Valor digitado:</p>
+
+  <amp-state id="coreState">
+    <script type="application/json">
+      {
+        "optionValues": {
+          "1": 0,
+          "2": 1647,
+          "3": 2,
+          "4": 3
+        },
+        "total": 0
+      }
+    </script>
+  </amp-state>
+
+  <amp-bind-macro 
+    id="sumValues" 
+    arguments="values" 
+    expression="AMP.setState({ total: values.map(value => (+value)) })">
+
+    <!-- Object.keys(obj.optionValues).reduce((x,y) => { console.log(x); return parseInt(x) + parseInt(y) }) -->
+  </amp-bind-macro>
+
+
+  <!-- ## Events -->
+  <!-- Listen to the `select` or `selectedOptions` events to trigger other actions or update `amp-state`. -->
+  <div>
+    <amp-selector 
+      multiple 
+      layout="container" 
+      class="radio-selector" 
+      on="select: 
+        AMP.setState({
+          targetOption: event.targetOption,
+          selectedOptions: event.selectedOptions
+        })
+      ">
+      <div option="0" hidden selected>Opção A1</div>
+      <div option="1">Opção A1</div>
+      <div option="2">Opção A2</div>
+      <div option="3">Opção A3</div>
+    </amp-selector>
+
+    <div>
+      Selected option: 
+      <code [text]="targetOption"></code>
+    </div>
+    <div>
+      All selected option(s):
+      <code [text]="selectedOptions"></code>
+    </div>
+    <div>
+      Option Values: 
+      <code [text]="sumValues(selectedOptions)"></code>
+      <code [text]="total"></code>
+    </div>
   </div>
 </body>
 </html>

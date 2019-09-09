@@ -22,6 +22,7 @@
   <!-- Capturar valores de select -->
   <div class="container flex-column-center-all">
     <span>_____________  Capturar valores de select _____________ </span>
+  
     <form>
       <select name="items-select" on="change:AMP.setState({item: event.value})">
         <option  value="Milk">Milk</option>
@@ -33,10 +34,12 @@
     
       <!-- Capturar valores de input -->
     <span>_____________  Capturar valores de input _____________ </span>
+  
     <form>
       <input type="number" name="items-text" on="change:AMP.setState({itemInput: event.value})">
     </form>
     <p [text]="'Valor digitado: ' + itemInput * 3">Valor digitado:</p>
+
   </div>
 </body>
 </html>

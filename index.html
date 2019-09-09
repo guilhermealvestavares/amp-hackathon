@@ -5,41 +5,71 @@
   <title></title>
   <!-- <link rel="canonical" href="index.html"> adicionar canonical certa -->
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  
+  <meta name="amp-script-src" content="sha384-YCFs8k-ouELcBTgzKzNAujZFxygwiqimSqKK7JqeKaGNflwDxaC3g2toj7s_kxWG">
   <script async src="https://cdn.ampproject.org/v0.js"></script>
   <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+  <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
   <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
   
+  
   <style amp-custom>
-    .container{height:100vh;} .flex-column-center-all{display:flex;justify-content: center;align-items: center;flex-direction: column;}
-    
+    .container{height:100vh;margin:0 20% 0 20%} .flex-column-center-all{display:flex;justify-content: center;align-items: center;flex-direction: column;}
+    input{padding: .75rem 0;border: .0625em solid #ddd;border-radius: .125em;color:#4a4a4a;width:280px;margin-bottom:12px;}
+    .btnSubmit{
+    width: 280px;
+    margin-top:8px;
+    background-color: #bcf236;
+    color: #2a2a2a;
+    padding: 1.0625rem 1.625rem;
+    border: .0625em solid transparent;
+    border-radius: .25em;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    color: #4a4a4a;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: Work Sans,sans-serif;
+    line-height: 16px;
+    text-transform: uppercase;
+    }
+    .subtitle{
+      color: #4a4a4a;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: Work Sans,sans-serif;
+    line-height: 16px;
+    text-transform: uppercase;
+    text-align: left;
+    width: 280px;
+    padding-top: 2rem;
+    padding-bottom: .5rem;
+    }
+    .show{
+      display:block
+    }
+    .hide{
+      display:none;
+    }
   </style>
   
   <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 </head>
 
 <body>
-  <!-- Capturar valores de select -->
+  
   <div class="container flex-column-center-all">
-    <span>_____________  Capturar valores de select _____________ </span>
-  
-    <form>
-      <select name="items-select" on="change:AMP.setState({item: event.value})">
-        <option  value="Milk">Milk</option>
-        <option  value="Chocolate">Chocolate</option>
-        <option  value="Cookies">Cookies</option>
-      </select>
-    </form>
-    <p [text]="'Valor selecionado: ' + item">Valor selecionado:</p>
-    
-      <!-- Capturar valores de input -->
-    <span>_____________  Capturar valores de input _____________ </span>
-  
-    <form>
-      <input type="number" name="items-text" on="change:AMP.setState({itemInput: event.value})">
-    </form>
-    <p [text]="'Valor digitado: ' + itemInput * 3">Valor digitado:</p>
+      <span class="subtitle">De quanto você precisa?</span>
+      <input id="inputValue" type="number" mask="" required placeholder="R$ 1.000,00" name="items-text" on="change:AMP.setState({itemInput: event.value, visible:true})">
+      
+      <span visible-when-invalid="valueMissing" validation-for="inputValue"></span>
+      <button class="btnSubmit">Continuar</button>
 
+      <div [class]="visible?show:hide">
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui hic quasi dicta accusamus, quo assumenda voluptates dolor tenetur facilis aliquid nostrum soluta nihil quis, accusantium culpa. Sed accusamus quia eaque.</p>
+      </div>
+    <!-- <p [text]="'Valor digitado: ' + itemInput * 3">Valor digitado:</p> -->
   </div>
+</head>
 </body>
 </html>

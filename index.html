@@ -95,42 +95,98 @@
   <amp-state id="coreState">
     <script type="application/json">
       {
-        "steps": [
-          {
-            "name": "Nome",
-            "value" "",
-            "isValid": false
-          }
-        ]
+        "step1": {
+          "name": "Nome",
+          "value": "",
+          "hide": false
+        },
+        "step2": {
+          "name": "Porque",
+          "value": "",
+          "hide": true
+        },
+        "step3": {
+          "name": "Quanto",
+          "value": "0",
+          "hide": true
+        }
       }
     </script>
   </amp-state>
   
   <div class="container flex-column-center-all">
     
-    <div class="step">
+    <div class="step" [class]="coreState.step1.hide ? 'hide' : 'show'">
       <h3 class="step__title">Qual o seu nome?</h3>
-      <input id="inputName" name="inputName" required on="change:AMP.setState({coreState: {name: event.value} })">
+      <input 
+        id="inputName" 
+        name="inputName"
+        on="input-throttled:AMP.setState({
+          coreState: {
+            step1: { 
+              value: event.value
+            }
+          }
+        })">
+      <button 
+        class="btnSubmit"
+        on="tap:AMP.setState({
+          coreState: {
+            step1: {
+              hide: coreState.step1.value != '' ? true : false,
+            },
+            step2: {
+              hide: coreState.step1.value != '' ? false : true,
+            }
+          }
+        })">
+        Próximo
+      </button>
     </div>
 
-    <div class="step" style="display: none;">
+    <div class="step hide" [class]="coreState.step2.hide ? 'hide' : 'show'">
       <h3 class="step__title">Porque?</h3>
-      <amp-selector class="sample-selector" layout="container">
-        <div option="" class="option">
+      <amp-selector 
+        class="sample-selector" 
+        layout="container"
+        on="select:AMP.setState({
+          coreState: {
+            step2: {
+              value: event.selectedOptions,
+              hide: true
+            },
+            step3: {
+              hide: false
+            }
+          }
+        })">
+        <div option="Dívidas" class="option">
           <span>Dívidas</span>
         </div>
-        <div option="" class="option">
+        <div option="Viagem" class="option">
           <span>Viagem</span>
         </div>
-        <div option="" class="option">
+        <div option="Investir" class="option">
           <span>Investir</span>
         </div>
       </amp-selector>
     </div>
-  
-    <button on="tap:AMP.setState({coreState: {step: coreState.step + 1} })" class="btnSubmit">Próximo</button>
-    <p [text]="coreState.name"></p>
-    <p [text]="coreState.step"></p>
+
+    <div class="step hide" [class]="coreState.step3.hide ? 'hide' : 'show'">
+      <h2 class="step__title">Quanto?</h2>
+    </div>
+
+
+    <div style="font-size: 12px;">
+      <br>
+      <strong>Primeiro Step</strong>
+      <div>Valor capturado: <span [text]="coreState.step1.value"></span></div>
+      <div>Step validado?: <span [text]="coreState.step1.hide"></span></div>
+      
+      <br>
+      <strong>Segundo Step</strong>
+      <div>Valor capturado: <span [text]="coreState.step2.value"></span></div>
+    </div>
   </div>
 </body>
 </head>

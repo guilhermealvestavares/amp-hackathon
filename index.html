@@ -93,6 +93,16 @@
     .option:first-child{
       margin-top: 0;
     }
+    .select-options--inline{
+      display: flex;
+      justify-content: space-between;
+    }
+    .select-options--inline .option{
+      height: auto;
+      min-height: 0;
+      width: calc(50% - .5rem);
+      margin: 0;
+    }
   </style>
 
   <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
@@ -101,25 +111,20 @@
   <amp-state id="coreState">
     <script type="application/json">
       {
-        "step1": {
-          "name": "Nome",
-          "value": "",
-          "hide": false
+        "infos": {
+          "name": "",
+          "reason": "",
+          "value": 0,
+          "pledgeAuto": false
         },
-        "step2": {
-          "name": "Porque",
-          "value": "",
-          "hide": true
-        },
-        "step3": {
-          "name": "Quanto",
-          "value": "0",
-          "hide": true
-        },
-        "step4": {
-          "name": "Garantia Auto",
-          "value": "0",
-          "hide": true
+        "steps": {
+          "step1": true,
+          "step2": false,
+          "step3": false,
+          "step4": false,
+          "step5": false,
+          "step6": false,
+          "step7": false
         }
       }
     </script>
@@ -127,15 +132,15 @@
   
   <div class="container flex-column-center-all">
     
-    <div class="step" [class]="coreState.step1.hide ? 'hide' : 'show'">
+    <div class="step" [class]="coreState.steps.step1 ? 'show' : 'hide'">
       <h3 class="step__title">Qual o seu nome?</h3>
       <input 
         id="inputName" 
         name="inputName"
         on="input-throttled:AMP.setState({
           coreState: {
-            step1: { 
-              value: event.value
+            infos: { 
+              name: event.value
             }
           }
         })">
@@ -143,11 +148,9 @@
         class="btnSubmit"
         on="tap:AMP.setState({
           coreState: {
-            step1: {
-              hide: coreState.step1.value != '' ? true : false,
-            },
-            step2: {
-              hide: coreState.step1.value != '' ? false : true,
+            steps: {
+              step1: coreState.infos.name != '' ? false : true,
+              step2: coreState.infos.name != '' ? true : false,
             }
           }
         })">
@@ -155,19 +158,19 @@
       </button>
     </div>
 
-    <div class="step hide" [class]="coreState.step2.hide ? 'hide' : 'show'">
+    <div class="step hide" [class]="coreState.steps.step2 ? 'show' : 'hide'">
       <h3 class="step__title">Porque?</h3>
       <amp-selector 
         class="select-options" 
         layout="container"
         on="select:AMP.setState({
           coreState: {
-            step2: {
-              value: event.selectedOptions,
-              hide: true
+            infos: { 
+              reason: event.selectedOptions
             },
-            step3: {
-              hide: false
+            steps: {
+              step2: false,
+              step3: true,
             }
           }
         })">
@@ -183,7 +186,7 @@
       </amp-selector>
     </div>
 
-    <div class="step hide" [class]="coreState.step3.hide ? 'hide' : 'show'">
+    <div class="step hide" [class]="coreState.steps.step3 ? 'show' : 'hide'">
       <h2 class="step__title">Quanto?</h2>
       <p class="step__help">
         Digite o valor sem os centávos.<br>
@@ -195,7 +198,7 @@
         type="number"
         on="input-throttled:AMP.setState({
           coreState: {
-            step3: { 
+            infos: { 
               value: event.value
             }
           }
@@ -204,11 +207,9 @@
         class="btnSubmit"
         on="tap:AMP.setState({
           coreState: {
-            step3: {
-              hide: coreState.step3.value != '' ? true : false,
-            },
-            step4: {
-              hide: coreState.step3.value != '' ? false : true,
+            steps: {
+              step3: coreState.infos.value != '' ? false : true,
+              step4: coreState.infos.value != '' ? true : false,
             }
           }
         })">
@@ -216,19 +217,19 @@
       </button>
     </div>
 
-    <div class="step hide" [class]="coreState.step4.hide ? 'hide' : 'show'">
+    <div class="step hide" [class]="coreState.steps.step4 ? 'show' : 'hide'">
       <h3 class="step__title">Você tem um carro?</h3>
       <amp-selector 
-        class="select-options" 
+        class="select-options select-options--inline" 
         layout="container"
         on="select:AMP.setState({
           coreState: {
-            step4: {
-              value: event.selectedOptions,
-              hide: true
+            infos: {
+              pledgeAuto: event.selectedOptions
             },
-            step5: {
-              hide: false
+            steps: {
+              step4: false,
+              step5: true
             }
           }
         })">
@@ -241,24 +242,88 @@
       </amp-selector>
     </div>
 
+    <div class="step hide" [class]="coreState.steps.step5 ? 'show' : 'hide'">
+      <h3 class="step__title">Você tem uma casa?</h3>
+      <amp-selector 
+        class="select-options select-options--inline" 
+        layout="container"
+        on="select:AMP.setState({
+          coreState: {
+            infos: {
+              pledgeHome: event.selectedOptions
+            },
+            steps: {
+              step5: false,
+              step6: true
+            }
+          }
+        })">
+        <div option="true" class="option">
+          <span>Sim</span>
+        </div>
+        <div option="false" class="option">
+          <span>Não</span>
+        </div>
+      </amp-selector>
+    </div>
+
+    <div class="step hide" [class]="coreState.steps.step6 ? 'show' : 'hide'">
+      <h3 class="step__title">Você trabalha em empresa privada?</h3>
+      <amp-selector 
+        class="select-options select-options--inline" 
+        layout="container"
+        on="select:AMP.setState({
+          coreState: {
+            infos: {
+              pledgePayroll: event.selectedOptions
+            },
+            steps: {
+              step6: false,
+              step7: true
+            }
+          }
+        })">
+        <div option="true" class="option">
+          <span>Sim</span>
+        </div>
+        <div option="false" class="option">
+          <span>Não</span>
+        </div>
+      </amp-selector>
+    </div>
+
+    <div class="step hide" [class]="coreState.steps.step7 ? 'show' : 'hide'">
+      <strong>Resultado Final</strong>
+    </div>
+
 
     <div style="font-size: 12px;">
       <br>
-      <strong>Primeiro Step</strong>
-      <div>Valor capturado: <span [text]="coreState.step1.value"></span></div>
-      <div>Step validado?: <span [text]="coreState.step1.hide"></span></div>
-      
+      <strong>STATE do Quiz</strong>
+      <div>Nome: <span [text]="coreState.infos.name"></span></div>
+      <div>Motivo: <span [text]="coreState.infos.reason"></span></div>
+      <div>Valor: <span [text]="coreState.infos.value"></span></div>
+      <div>Tem carro? <span [text]="coreState.infos.pledgeAuto ? 'Sim' : 'Não'"></span></div>
+      <div>Tem casa? <span [text]="coreState.infos.pledgeHome ? 'Sim' : 'Não'"></span></div>
+      <div>Trabalha em empresa privada? <span [text]="coreState.infos.pledgePayroll ? 'Sim' : 'Não'"></span></div>
       <br>
-      <strong>Segundo Step</strong>
-      <div>Valor capturado: <span [text]="coreState.step2.value"></span></div>
+      <hr>
+      <br>
 
+      <strong>Primeiro Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step1"></span></div>
       <br>
-      <strong>Terceiro Step</strong>
-      <div>Valor capturado: <span [text]="coreState.step3.value"></span></div>
+      <strong>Segundo Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step2"></span></div>
+      <br>
+      <strong>Terceiro Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step3"></span></div>
+      <br>
+      <strong>Quarto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step4"></span></div>
+      <br>
+      <strong>Quinto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step5"></span></div>
+      <br>
+      <strong>Sexto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step6"></span></div>
+      <br>
+      <strong>Sétimo Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step7"></span></div>
 
-      <br>
-      <strong>Quarto Step</strong>
-      <div>Valor capturado: <span [text]="coreState.step4.value"></span></div>
       <br><br>
     </div>
   </div>

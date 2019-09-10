@@ -7,17 +7,39 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
   <meta name="amp-script-src" content="sha384-YCFs8k-ouELcBTgzKzNAujZFxygwiqimSqKK7JqeKaGNflwDxaC3g2toj7s_kxWG">
   <script async src="https://cdn.ampproject.org/v0.js"></script>
-  <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
-  <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
   <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
   <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
-  
-  
+
   <style amp-custom>
-    .container{height:100vh;margin:0 20% 0 20%} .flex-column-center-all{display:flex;justify-content: center;align-items: center;flex-direction: column;}
-    input{padding: .75rem 0;border: .0625em solid #ddd;border-radius: .125em;color:#4a4a4a;width:280px;margin-bottom:12px;}
+    * {
+      font-family: Work Sans,sans-serif;
+      color: #4a4a4a;
+      box-sizing: border-box;
+    }
+    .container{
+      width: 100%;
+      max-width: 320px;
+      padding: 0 1.5em;
+      height:100vh;
+      margin:0 auto;
+    } 
+    .flex-column-center-all{
+      display:flex;
+      justify-content: center;
+      align-items: stretch;
+      flex-direction: column;
+    }
+    input{
+      display: block;
+      padding: .75rem;
+      border: .0625em solid #ddd;
+      border-radius: .125em;
+      color:#4a4a4a;
+      width: 100%;
+      margin-bottom:12px;
+    }
     .btnSubmit{
-      width: 280px;
+      width: 100%;
       margin-top:8px;
       background-color: #bcf236;
       color: #2a2a2a;
@@ -30,21 +52,18 @@
       color: #4a4a4a;
       font-size: 12px;
       font-weight: 500;
-      font-family: Work Sans,sans-serif;
       line-height: 16px;
       text-transform: uppercase;
     }
-    .subtitle{
-      color: #4a4a4a;
+    .step__title{
+      font-family: Work Sans,sans-serif;
       font-size: 12px;
       font-weight: 500;
-      font-family: Work Sans,sans-serif;
       line-height: 16px;
       text-transform: uppercase;
       text-align: left;
-      width: 280px;
       padding-top: 2rem;
-      padding-bottom: .5rem;
+      margin-bottom: .5rem;
     }
     .show{
       display:block
@@ -57,56 +76,62 @@
       border-radius: 5px;
       border: 1px solid hsla(240,8%,57%,.2);
       box-shadow: 0 10px 25px 0 hsla(240,8%,57%,.25);
-      height:120px;
-      width: 280px;
-      margin: 20px;
-      padding:20px;
+      width: 100%;
+      min-height: 120px;
+      margin: 1.5rem 0;
+      padding:1.5rem;
       display:flex;
       align-items: center;
       justify-content: center;
     }
+    .option:first-child{
+      margin-top: 0;
+    }
   </style>
-  
+
   <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 </head>
-
 <body>
-    <amp-state id="coreState">
-      <script type="application/json">
-        {
-          "step": 0
-        }
-      </script>
-    </amp-state>
+  <amp-state id="coreState">
+    <script type="application/json">
+      {
+        "steps": [
+          {
+            "name": "Nome",
+            "value" "",
+            "isValid": false
+          }
+        ]
+      }
+    </script>
+  </amp-state>
   
   <div class="container flex-column-center-all">
-    <div class="step-input show" [class]="visible?'hide':'show'">
-      <span class="subtitle">De quanto você precisa?</span>
-      <input id="inputValue" type="number" required placeholder="R$ 1.000,00" name="items-text" on="change:AMP.setState({itemInput: event.value})">
-      <span visible-when-invalid="valueMissing" validation-for="inputValue"></span>
+    
+    <div class="step">
+      <h3 class="step__title">Qual o seu nome?</h3>
+      <input id="inputName" name="inputName" required on="change:AMP.setState({coreState: {name: event.value} })">
     </div>
-    
-    
-    <div class="hide" [class]="visible?'show':'hide'">
-      <amp-selector class="sample-selector"
-      layout="container">
-      <div class="option">
-        <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam perferendis blanditiis nesciunt fugiat excepturi </span>
-      </div>
-      
-      <div class="option">
-        <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam perferendis blanditiis nesciunt fugiat excepturi </span>
-      </div>
-      
-      <div class="option">
-        <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam perferendis blanditiis nesciunt fugiat excepturi </span>
-      </div>
-    </amp-selector>
-    <!-- <p [text]="'Valor digitado: ' + itemInput * 3">Valor digitado:</p> -->
+
+    <div class="step" style="display: none;">
+      <h3 class="step__title">Porque?</h3>
+      <amp-selector class="sample-selector" layout="container">
+        <div option="" class="option">
+          <span>Dívidas</span>
+        </div>
+        <div option="" class="option">
+          <span>Viagem</span>
+        </div>
+        <div option="" class="option">
+          <span>Investir</span>
+        </div>
+      </amp-selector>
+    </div>
+  
+    <button on="tap:AMP.setState({coreState: {step: coreState.step + 1} })" class="btnSubmit">Próximo</button>
+    <p [text]="coreState.name"></p>
+    <p [text]="coreState.step"></p>
   </div>
-  <button on="tap:AMP.setState({coreState.step: (+coreState.step) + 1 })" class="btnSubmit">Continuar</button>
-  <p [text]="coreState.step"></p>
-</div>
-</head>
 </body>
+</head>
 </html>

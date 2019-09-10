@@ -7,11 +7,10 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
   <meta name="amp-script-src" content="sha384-YCFs8k-ouELcBTgzKzNAujZFxygwiqimSqKK7JqeKaGNflwDxaC3g2toj7s_kxWG">
   <script async src="https://cdn.ampproject.org/v0.js"></script>
-  <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+  
   <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
   <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
-  <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
-  
+
   
   <style amp-custom>
     .container{height:100vh;margin:0 20% 0 20%} .flex-column-center-all{display:flex;justify-content: center;align-items: center;flex-direction: column;}
@@ -71,41 +70,41 @@
 </head>
 
 <body>
-    <amp-state id="coreState">
-      <script type="application/json">
-        {
-          "step": 0
-        }
-      </script>
-    </amp-state>
+  <amp-state id="coreState">
+    <script type="application/json">
+      {
+        "value": 0
+      }
+    </script>
+  </amp-state>
   
+  <amp-bind-macro 
+    id="calcAuto" 
+    arguments="value"
+    expression="value * 0.036092226131346654"
+  >
+  </amp-bind-macro>
+
+  <!-- 10000 * (0.0149 / (1 - (1 + 0.0149)**(-36))); -->
+
+
   <div class="container flex-column-center-all">
-    <div class="step-input show" [class]="visible?'hide':'show'">
+    <div class="step-input">
       <span class="subtitle">De quanto você precisa?</span>
-      <input id="inputValue" type="number" required placeholder="R$ 1.000,00" name="items-text" on="change:AMP.setState({itemInput: event.value})">
+      <input 
+        id="inputValue" 
+        type="number" 
+        required 
+        placeholder="R$ 1.000,00" 
+        name="items-text" 
+        on="change:AMP.setState({ value: event.value })">
       <span visible-when-invalid="valueMissing" validation-for="inputValue"></span>
     </div>
-    
-    
-    <div class="hide" [class]="visible?'show':'hide'">
-      <amp-selector class="sample-selector"
-      layout="container">
-      <div class="option">
-        <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam perferendis blanditiis nesciunt fugiat excepturi </span>
-      </div>
-      
-      <div class="option">
-        <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam perferendis blanditiis nesciunt fugiat excepturi </span>
-      </div>
-      
-      <div class="option">
-        <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam perferendis blanditiis nesciunt fugiat excepturi </span>
-      </div>
-    </amp-selector>
-    <!-- <p [text]="'Valor digitado: ' + itemInput * 3">Valor digitado:</p> -->
+    <p>Valor: <br><span [text]="value"></span></p>
+    <p>Valor Calculado: <br><span [text]="calcAuto(value)"></span></p>
   </div>
-  <button on="tap:AMP.setState({coreState.step: (+coreState.step) + 1 })" class="btnSubmit">Continuar</button>
-  <p [text]="coreState.step"></p>
+
+  <!-- <button on="tap:AMP.setState({coreState.step: (+coreState.step) + 1 })" class="btnSubmit">Continuar</button> -->
 </div>
 </head>
 </body>

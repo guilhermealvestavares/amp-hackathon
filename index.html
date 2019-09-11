@@ -132,13 +132,6 @@
     </script>
   </amp-state>
 
-  <amp-bind-macro id="getLog10" arguments="num" expression="num.length - 1"></amp-bind-macro>
-  <amp-bind-macro id="numShouldHaveComma" arguments="log10" expression="log10%3==0 && log10!=0"></amp-bind-macro>
-  <amp-bind-macro id="formatNumber_map" arguments="char, ind, numStr" expression="(numShouldHaveComma(getLog10(numStr.substr(ind)))) ? char+',' : char"></amp-bind-macro>
-  <amp-bind-macro id="formatNumber" arguments="num, numStr" expression="numStr.split('').map((char,ind)=>formatNumber_map(char,ind, numStr)).join('')"></amp-bind-macro>
-  <amp-bind-macro id="formatMoney" arguments="val" expression="'$'+formatNumber(round(val), round(val).toString())"></amp-bind-macro>
-
-  
   <div class="container flex-column-center-all">
     <div class="step" [class]="coreState.steps.step1 ? 'show' : 'hide'">
       <h3 class="step__title">Qual o seu nome?</h3>
@@ -304,7 +297,6 @@
     <div class="step hide" [class]="coreState.steps.step7 ? 'show' : 'hide'">
       <strong>Resultado Final</strong>
     </div>
-    
 
     <div style="font-size: 12px;">
       <br>

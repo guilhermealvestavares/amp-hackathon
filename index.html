@@ -122,7 +122,9 @@
           "name": "",
           "reason": "",
           "value": 0,
-          "pledgeAuto": false
+          "pledgeAuto": false,
+          "pledgeHome": false,
+          "pledgePayroll": false
         },
         "steps": {
           "step1": true,
@@ -136,9 +138,8 @@
       }
     </script>
   </amp-state>
-  
+
   <div class="container flex-column-center-all">
-    
     <div class="step" [class]="coreState.steps.step1 ? 'show' : 'hide'">
       <h3 class="step__title">Qual o seu nome?</h3>
       <input 
@@ -224,7 +225,8 @@
       <input 
         id="inputValue" 
         name="inputValue"
-        type="number"
+        type="text"
+        min="0"
         on="input-throttled:AMP.setState({
           coreState: {
             infos: { 
@@ -327,7 +329,6 @@
       <strong>Resultado Final</strong>
     </div>
 
-
     <div style="font-size: 12px;">
       <br>
       <strong>STATE do Quiz</strong>
@@ -337,6 +338,7 @@
       <div>Tem carro? <span [text]="coreState.infos.pledgeAuto ? 'Sim' : 'Não'"></span></div>
       <div>Tem casa? <span [text]="coreState.infos.pledgeHome ? 'Sim' : 'Não'"></span></div>
       <div>Trabalha em empresa privada? <span [text]="coreState.infos.pledgePayroll ? 'Sim' : 'Não'"></span></div>
+
       <br>
       <hr>
       <br>

@@ -5,31 +5,142 @@
   <title></title>
   <!-- <link rel="canonical" href="index.html"> adicionar canonical certa -->
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  <meta name="amp-script-src" content="sha384-YCFs8k-ouELcBTgzKzNAujZFxygwiqimSqKK7JqeKaGNflwDxaC3g2toj7s_kxWG">
   <script async src="https://cdn.ampproject.org/v0.js"></script>
   <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
   <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
+  <script async custom-element="amp-script" src="https://cdn.ampproject.org/v0/amp-script-0.1.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Nunito|Nunito+Sans&display=swap" rel="stylesheet">
+  <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
   
   <style amp-custom>
     * {
       font-family: 'Nunito', sans-serif;
       color: #4a4a4a;
       box-sizing: border-box;
+      margin:0;
     }
+    .hideResults{display:none;}
+    .showResults{display:block;}
     .container{
       width: 100%;
       max-width: 320px;
       padding: 0 1.5em;
-      min-height:100vh;
       margin:0 auto;
     } 
+
+    .hero{
+      padding-top: 90px;
+      height: 703px;
+      width:100%;
+      background-color: #11bb77;
+    }
+
+    .title{
+      margin-top:12px;
+      width: 278px;
+      font-size: 24px;
+      line-height: 1.33;
+      color: #ffffff;
+      font-weight: normal;
+    }
+
+    .subtitle{
+      width: 1178px;
+      font-size: 72px;
+      font-weight: bold;
+      line-height: 1.11;
+      color: #ffffff;
+    }
+
+    .text-description{
+      margin:42px 0 24px 0;
+      width: 770px;
+      height: 64px;
+      font-size: 24px;
+      font-weight: normal;
+      line-height: 1.33;
+      color: #ffffff;
+    }
+
+    .separator{
+      width: 40px;
+      height: 8px;
+      border-radius: 4px;
+      background-color: #ffffff;
+      margin-bottom:36px;
+    }
+
+    .flex-center-center{
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .flex-start-center--column{
+      display:flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
     .flex-column-center-all{
       display:flex;
       justify-content: center;
       align-items: stretch;
       flex-direction: column;
     }
+    
+    .btn-iniciar-quiz{
+      width: 280px;
+      height: 48px;
+      border-radius: 8px;
+      background-color: #3377bb;
+      display:flex;
+      justify-content: center;
+      align-items:center;
+      color: #ffffff;
+      font-weight: bold;
+      text-transform:uppercase;
+      display:none;
+    }
+
+    .step-one{
+      margin-top:-50px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      
+      .hero{
+        height:90vh;
+      }
+
+      .title{
+        font-size: 16px;
+        width:187px;
+      }
+      .subtitle{
+        width:300px;
+        font-size:32px;
+      }
+      .text-description{
+        margin-top:16px;
+        width:280px;
+        font-size:16px;
+        line-height: 1.5;
+      }
+      .separator{
+        margin-top:24px;
+      }
+      .flex-start-center--column{
+        align-items: flex-start;
+        text-align: left;
+      }
+      .btn-iniciar-quiz{
+        display:flex;
+      }
+    }
+
     input{
       display: block;
       padding: .75rem;
@@ -115,81 +226,101 @@
       margin: 1.5rem 0;
       padding:1.5rem;
     }
-
+    
     table{
       width:100%;
       font-size:16px;
       border-collapse: collapse;
     }
-
+    
     table td{
       border: 1px solid hsla(240,8%,57%,.2);
       height:48px;
       text-align: center;
     }
-
+    
     table td span{
       font-weight: 600;
     }
-  </style>
 
+    
+
+  </style>
+  
   <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 </head>
 <body>
-  <amp-state id="coreState">
-    <script type="application/json">
-      {
-        "infos": {
-          "name": "",
-          "reason": "",
-          "value": 0,
-          "pledgeAuto": false,
-          "pledgeHome": false,
-          "pledgePayroll": false
-        },
-        "steps": {
-          "step1": true,
-          "step2": false,
-          "step3": false,
-          "step4": false,
-          "step5": false,
-          "step6": false,
-          "step7": false
+    <amp-state id="coreState">
+      <script type="application/json">
+        {
+          "infos": {
+            "name": "",
+            "reason": "",
+            "value": 0,
+            "pledgeAuto": "",
+            "pledgeHome": "",
+            "pledgePayroll": ""
+          },
+          "steps": {
+            "step1": true,
+            "step2": false,
+            "step3": false,
+            "step4": false,
+            "step5": false,
+            "step6": false,
+            "step7": false
+          },
+          "products":{
+            "payroll":false,
+            "auto":false,
+            "home":false
+          }
+
         }
-      }
-    </script>
-  </amp-state>
+      </script>
+    </amp-state>
+    
+    <section class="hero flex-start-center--column">
+      <h1 class="title">Quiz empréstimo Creditas</h1>
+      <h2 class="subtitle">Descubra qual é o melhor empréstimo pra você!</h2>
+      <h3 class="text-description">Vamos te ajudar a encontrar o empréstimo que se encaixa no seu perfil. Responda as perguntas do Quiz e descubra!</h3>
+      <span class="separator"></span>
+      <div class="flex-center-center">
+        <a class="btn-iniciar-quiz">Iniciar o Quiz</a>
+      </div>
+      
+    </section>
 
-  <div class="container flex-column-center-all">
-    <div class="step" [class]="coreState.steps.step1 ? 'show' : 'hide'">
-      <h3 class="step__title">Qual o seu nome?</h3>
-      <input 
-        id="inputName" 
-        name="inputName"
-        on="input-throttled:AMP.setState({
-          coreState: {
-            infos: { 
-              name: event.value
+    <div class="container flex-column-center-all">
+        <div class="step step-one" [class]="coreState.steps.step1 ? 'show' : 'hide'">
+          <h3 class="step__title">Qual o seu nome?</h3>
+          <input 
+          id="inputName" 
+          name="inputName"
+          on="input-throttled:AMP.setState({
+            coreState: {
+              infos: { 
+                name: event.value
+              }
             }
-          }
-        })">
-      <button 
-        class="btnSubmit"
-        on="tap:AMP.setState({
-          coreState: {
-            steps: {
-              step1: coreState.infos.name != '' ? false : true,
-              step2: coreState.infos.name != '' ? true : false,
+          })">
+          <button 
+          class="btnSubmit"
+          on="tap:AMP.setState({
+            coreState: {
+              steps: {
+                step1: coreState.infos.name != '' ? false : true,
+                step2: coreState.infos.name != '' ? true : false,
+              }
             }
-          }
-        })">
-        Próximo
-      </button>
-    </div>
-
-    <div class="step hide" [class]="coreState.steps.step2 ? 'show' : 'hide'">
-      <h3 class="step__title">Porque?</h3>
-      <amp-selector 
+          })">
+          Próximo
+        </button>
+      </div>
+      
+      <div class="step hide" [class]="coreState.steps.step2 ? 'show' : 'hide'">
+        <h3 class="step__title">Porque?</h3>
+        <amp-selector 
         class="select-options" 
         layout="container"
         on="select:AMP.setState({
@@ -214,7 +345,6 @@
         </div>
       </amp-selector>
     </div>
-
     <div class="step hide" [class]="coreState.steps.step3 ? 'show' : 'hide'">
       <h2 class="step__title">Quanto?</h2>
       <p class="step__help">
@@ -222,242 +352,247 @@
         Ex.: para <span class="highlighted">R$ 10.000,00</span> digite apenas: <span class="highlighted">10000</span>
       </p>
       <input 
-        id="inputValue" 
-        name="inputValue"
-        type="text"
-        min="0"
-        on="input-throttled:AMP.setState({
-          coreState: {
-            infos: { 
-              value: event.value
-            }
+      id="inputValue" 
+      name="inputValue"
+      type="number"
+      min="0"
+      on="input-throttled:AMP.setState({
+        coreState: {
+          infos: { 
+            value: event.value
           }
-        })">
+        }
+      })">
       <button 
-        class="btnSubmit"
-        on="tap:AMP.setState({
-          coreState: {
-            steps: {
-              step3: coreState.infos.value != '' ? false : true,
-              step4: coreState.infos.value != '' ? true : false,
-            }
+      class="btnSubmit"
+      on="tap:AMP.setState({
+        coreState: {
+          steps: {
+            step3: coreState.infos.value != '' ? false : true,
+            step4: coreState.infos.value != '' ? true : false,
           }
-        })">
-        Próximo
-      </button>
+        }
+      })">
+      Próximo
+    </button>
     </div>
 
     <div class="step hide" [class]="coreState.steps.step4 ? 'show' : 'hide'">
-      <h3 class="step__title">Você tem um carro?</h3>
-      <amp-selector 
-        class="select-options select-options--inline" 
-        layout="container"
-        on="select:AMP.setState({
-          coreState: {
-            infos: {
-              pledgeAuto: event.selectedOptions
-            },
-            steps: {
-              step4: false,
-              step5: true
-            }
-          }
-        })">
-        <div option="true" class="option">
-          <span>Sim</span>
-        </div>
-        <div option="false" class="option">
-          <span>Não</span>
-        </div>
-      </amp-selector>
+    <h3 class="step__title">Você tem um carro?</h3>
+    <amp-selector 
+    class="select-options select-options--inline" 
+    layout="container"
+    on="select:AMP.setState({
+      coreState: {
+        products: {
+          auto: event.selectedOptions == 'true'
+        },
+        steps: {
+          step4: false,
+          step5: true
+        }
+      }
+    })">
+    <div option="true" class="option">
+      <span>Sim</span>
+    </div>
+    <div option="false" class="option">
+      <span>Não</span>
+    </div>
+    </amp-selector>
     </div>
 
     <div class="step hide" [class]="coreState.steps.step5 ? 'show' : 'hide'">
-      <h3 class="step__title">Você tem uma casa?</h3>
-      <amp-selector 
-        class="select-options select-options--inline" 
-        layout="container"
-        on="select:AMP.setState({
-          coreState: {
-            infos: {
-              pledgeHome: event.selectedOptions
-            },
-            steps: {
-              step5: false,
-              step6: true
-            }
-          }
-        })">
-        <div option="true" class="option">
-          <span>Sim</span>
-        </div>
-        <div option="false" class="option">
-          <span>Não</span>
-        </div>
-      </amp-selector>
+    <h3 class="step__title">Você tem uma casa?</h3>
+    <amp-selector 
+    class="select-options select-options--inline" 
+    layout="container"
+    on="select:AMP.setState({
+      coreState: {
+        products: {
+          home: event.selectedOptions == 'true'
+        },
+        steps: {
+          step5: false,
+          step6: true
+        }
+      }
+    })">
+    <div option="true" class="option">
+      <span>Sim</span>
+    </div>
+    <div option="false" class="option">
+      <span>Não</span>
+    </div>
+    </amp-selector>
     </div>
 
     <div class="step hide" [class]="coreState.steps.step6 ? 'show' : 'hide'">
-      <h3 class="step__title">Você trabalha em empresa privada?</h3>
-      <amp-selector 
-        class="select-options select-options--inline" 
-        layout="container"
-        on="select:AMP.setState({
-          coreState: {
-            infos: {
-              pledgePayroll: event.selectedOptions
-            },
-            steps: {
-              step6: false,
-              step7: true
-            }
-          }
-        })">
-        <div option="true" class="option">
-          <span>Sim</span>
-        </div>
-        <div option="false" class="option">
-          <span>Não</span>
-        </div>
-      </amp-selector>
+    <h3 class="step__title">Você trabalha em empresa privada?</h3>
+    <amp-selector 
+    class="select-options select-options--inline" 
+    layout="container"
+    on="select:AMP.setState({
+      coreState: {
+        products: {
+          payroll: event.selectedOptions == 'true'
+        },
+        steps: {
+          step6: false,
+          step7: true
+        }
+      }
+    })">
+    <div option="true" class="option">
+      <span>Sim</span>
+    </div>
+    <div option="false" class="option">
+      <span>Não</span>
+    </div>
+    </amp-selector>
     </div>
 
     <div class="step hide" [class]="coreState.steps.step7 ? 'show' : 'hide'">
-      <strong>Resultado Final</strong>
+    <strong>Resultado Final</strong>
     </div>
 
-    <div style="font-size: 12px;">
-      <br>
-      <strong>STATE do Quiz</strong>
-      <div>Nome: <span [text]="coreState.infos.name"></span></div>
-      <div>Motivo: <span [text]="coreState.infos.reason"></span></div>
-      <div>Valor: <span [text]="coreState.infos.value"></span></div>
-      <div>Tem carro? <span [text]="coreState.infos.pledgeAuto ? 'Sim' : 'Não'"></span></div>
-      <div>Tem casa? <span [text]="coreState.infos.pledgeHome ? 'Sim' : 'Não'"></span></div>
-      <div>Trabalha em empresa privada? <span [text]="coreState.infos.pledgePayroll ? 'Sim' : 'Não'"></span></div>
+    <div style="font-size: 12px; display:none;">
+    <br>
+    <strong>STATE do Quiz</strong>
+    <div>Nome: <span id="name" [text]="coreState.infos.name"></span></div>
+    <div>Motivo: <span [text]="coreState.infos.reason"></span></div>
+    <div>Valor: <span [text]="coreState.infos.value"></span></div>
+    <div>Tem carro? <span [text]="coreState.products.auto ? 'Sim' : 'Não'"></span></div>
+    <div>Tem casa? <span [text]="coreState.products.home ? 'Sim' : 'Não'"></span></div>
+    <div>Trabalha em empresa privada? <span [text]="coreState.products.payroll ? 'Sim' : 'Não'"></span></div>
 
-      <br>
-      <hr>
-      <br>
+    <br>
+    <hr>
+    <br>
 
-      <strong>Primeiro Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step1"></span></div>
-      <br>
-      <strong>Segundo Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step2"></span></div>
-      <br>
-      <strong>Terceiro Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step3"></span></div>
-      <br>
-      <strong>Quarto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step4"></span></div>
-      <br>
-      <strong>Quinto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step5"></span></div>
-      <br>
-      <strong>Sexto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step6"></span></div>
-      <br>
-      <strong>Sétimo Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step7"></span></div>
+    <strong>Primeiro Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step1"></span></div>
+    <br>
+    <strong>Segundo Step</strong> <div>Exibir Step?: <span  [text]="coreState.steps.step2"></span></div>
+    <br>
+    <strong>Terceiro Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step3"></span></div>
+    <br>
+    <strong>Quarto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step4"></span></div>
+    <br>
+    <strong>Quinto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step5"></span></div>
+    <br>
+    <strong>Sexto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step6"></span></div>
+    <br>
+    <strong>Sétimo Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step7"></span></div>
 
-      <br><br>
+    <br><br>
     </div>
-    <div class="table-success__home">
+
+      <div class="step hide" [class]="coreState.steps.step7 ? 'show' : 'hide'">
+      <div class="table-success__home" [class]="coreState.products.home && (+coreState.infos.value) >= 30000 && (+coreState.infos.value) <= 3000000 ? 'show' : 'hide'">
         <h2>Garantia de imóvel</h2>
         <table>
           <tr>
             <td>
               <span>60x</span>
             </td>
-            <td>
-              19.483,55
+            <td [text]="((+coreState.infos.value) * 0.022) + ',00' ">
+              
             </td>
           </tr>
           <tr>
             <td>
-                <span>120x</span>
+              <span>120x</span>
             </td>
-            <td>
-              19.483,55
+            <td [text]="(+coreState.infos.value) * 0.014 + ',00'">
             </td>
           </tr>
           <tr>
             <td>
               <span>180x</span>
             </td>
-            <td>
-              19.483,55
+            <td [text]="(+coreState.infos.value) * 0.011 + ',00'">
             </td>
           </tr>
+        </table>
+        <a
+        class="btnSubmit">
+        Simule agora
+      </a>
+      </div>
+
+      <div class="table-success__auto" [class]="coreState.products.auto && ((+coreState.infos.value) >= 5000 && (+coreState.infos.value) <= 150000) && (coreState.products.home == false)  ? 'show' : 'hide'">
+      <h2>Garantia de veículo</h2>
+      <table>
+        <tr>
+          <td>
+            <span>12x</span>
+          </td>
+          <td [text]="((+coreState.infos.value) * 0.091) + ',00' ">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>24x</span>
+          </td>
+          <td [text]="((+coreState.infos.value) * 0.049) + ',00' ">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>36x</span>
+          </td>
+          <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
+          </td>
+        </tr>
       </table>
       <a
       class="btnSubmit">
       Simule agora
       </a>
       </div>
-      
-      <div class="table-success__auto">
-          <h2>Garantia de veículo</h2>
-          <table>
-            <tr>
-              <td>
-                <span>18x</span>
-              </td>
-              <td>
-                19.483,55
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  <span>120x</span>
-              </td>
-              <td>
-                19.483,55
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>180x</span>
-              </td>
-              <td>
-                19.483,55
-              </td>
-            </tr>
-        </table>
+
+      <div class="table-success__payroll" [class]="coreState.products.payroll && (+coreState.infos.value) >= 1000 && (+coreState.infos.value) <= 50000 && coreState.products.home == false && coreState.products.auto == false ? 'show' : 'hide'"> 
+      <h2>Garantia de Salário</h2>
+      <table>
+        <tr>
+          <td>
+            <span>6x</span>
+          </td>
+          <td [text]="((+coreState.infos.value) * 0.177) + ',00'">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>24x</span>
+          </td>
+          <td [text]="((+coreState.infos.value) * 0.049) + ',00'">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>48x</span>
+          </td>
+          <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
+          </td>
+        </tr>
+      </table>
+      <a
+      class="btnSubmit">
+      Simule agora
+      </a>
+      </div>
+
+      <div class="table-error" [class]="(coreState.products.home == false && coreState.products.auto == false && coreState.products.payroll == false) || ((+coreState.infos.value) < 1000 && (+coreState.infos.value) < 3000001) ? 'show' : 'hide'"> 
+        <h2>Não temos nem um produto para o seu perfil</h2>
         <a
         class="btnSubmit">
-        Simule agora
+        Simule novamente
         </a>
         </div>
-      
-        <div class="table-success__payroll">
-            <h2>Garantia de Salário</h2>
-            <table>
-              <tr>
-                <td>
-                  <span>6x</span>
-                </td>
-                <td>
-                  19.483,55
-                </td>
-              </tr>
-              <tr>
-                <td>
-                    <span>24x</span>
-                </td>
-                <td>
-                  19.483,55
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span>48x</span>
-                </td>
-                <td>
-                  19.483,55
-                </td>
-              </tr>
-          </table>
-          <a
-          class="btnSubmit">
-          Simule agora
-          </a>
-        </div>
-  </div>
+      </div>
+    
+    </div>
+
 </body>
 </head>
 </html>

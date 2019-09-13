@@ -268,16 +268,7 @@
           "pledgeHome": "",
           "pledgePayroll": ""
         },
-        "steps": {
-          "step0": true,
-          "step1": false,
-          "step2": false,
-          "step3": false,
-          "step4": false,
-          "step5": false,
-          "step6": false,
-          "step7": false
-        },
+        "currentStep": 0,
         "products":{
           "payroll":false,
           "auto":false,
@@ -298,16 +289,13 @@
     <h2 class="subtitle">Descubra qual é o melhor empréstimo pra você!</h2>
     <h3 class="text-description">Vamos te ajudar a encontrar o empréstimo que se encaixa no seu perfil. Responda as perguntas do Quiz e descubra!</h3>
     <span class="separator"></span>
-    <div class="flex-center-center" [class]="coreState.steps.step0 ? 'flex-center-center show' : 'flex-center-center hide'">
+    <div class="flex-center-center" [class]="coreState.currentStep == 0 ? 'flex-center-center show' : 'flex-center-center hide'">
       <button 
         type="button"
         class="btn-iniciar-quiz"
         on="tap:AMP.setState({
           coreState: {
-            steps: {
-              step0: false,
-              step1: true,
-            }
+            currentStep: 1
           }
         })">
         Iniciar o Quiz
@@ -316,7 +304,7 @@
   </section>
 
   <div class="container flex-column-center-all">
-    <div class="step hide" [class]="coreState.steps.step1 ? 'step show' : 'step hide'">
+    <div class="step hide" [class]="coreState.currentStep == 1 ? 'step show' : 'step hide'">
       <h3 class="step__title">Qual o seu nome?</h3>
       <input 
         id="inputName" 
@@ -332,17 +320,14 @@
         class="btnSubmit"
         on="tap:AMP.setState({
           coreState: {
-            steps: {
-              step1: coreState.infos.name != '' ? false : true,
-              step2: coreState.infos.name != '' ? true : false,
-            }
+            currentStep: coreState.infos.name != '' ? 2 : 1
           }
         })">
         Próximo
       </button>
     </div>
     
-    <div class="step hide" [class]="coreState.steps.step2 ? 'step show' : 'step hide'">
+    <div class="step hide" [class]="coreState.currentStep == 2 ? 'step show' : 'step hide'">
       <h3 class="step__title">Porque?</h3>
       <amp-selector 
         class="select-options" 
@@ -352,10 +337,7 @@
             infos: { 
               reason: event.selectedOptions
             },
-            steps: {
-              step2: false,
-              step3: true,
-            }
+            currentStep: 3
           }
         })">
         <div option="Dívidas" class="option">
@@ -370,7 +352,7 @@
       </amp-selector>
     </div>
 
-    <div class="step hide" [class]="coreState.steps.step3 ? 'step show' : 'step hide'">
+    <div class="step hide" [class]="coreState.currentStep == 3 ? 'step show' : 'step hide'">
       <h2 class="step__title">Quanto?</h2>
       <p class="step__help">
         Digite o valor sem os centávos.<br>
@@ -392,17 +374,14 @@
           class="btnSubmit"
           on="tap:AMP.setState({
             coreState: {
-              steps: {
-                step3: isValidPrice(coreState.infos.value) ? false : true,
-                step4: isValidPrice(coreState.infos.value) ? true : false,
-              }
+              currentStep: isValidPrice(coreState.infos.value) ? 4 : 3
             }
           })">
         Próximo
         </button>
     </div>
 
-    <div class="step hide" [class]="coreState.steps.step4 ? 'step show' : 'step hide'">
+    <div class="step hide" [class]="coreState.currentStep == 4 ? 'step show' : 'step hide'">
       <h3 class="step__title">Você tem um carro?</h3>
       <amp-selector 
         class="select-options select-options--inline" 
@@ -412,10 +391,7 @@
             products: {
               auto: event.selectedOptions == 'true'
             },
-            steps: {
-              step4: false,
-              step5: true
-            }
+            currentStep: 5
           }
         })">
         <div option="true" class="option">
@@ -427,7 +403,7 @@
       </amp-selector>
     </div>
 
-    <div class="step hide" [class]="coreState.steps.step5 ? 'step show' : 'step hide'">
+    <div class="step hide" [class]="coreState.currentStep == 5 ? 'step show' : 'step hide'">
       <h3 class="step__title">Você tem uma casa?</h3>
       <amp-selector 
         class="select-options select-options--inline" 
@@ -437,10 +413,7 @@
             products: {
               home: event.selectedOptions == 'true'
             },
-            steps: {
-              step5: false,
-              step6: true
-            }
+            currentStep: 6
           }
         })">
         <div option="true" class="option">
@@ -452,7 +425,7 @@
       </amp-selector>
     </div>
 
-    <div class="step hide" [class]="coreState.steps.step6 ? 'step show' : 'step hide'">
+    <div class="step hide" [class]="coreState.currentStep == 6 ? 'step show' : 'step hide'">
       <h3 class="step__title">Você trabalha em empresa privada?</h3>
       <amp-selector 
         class="select-options select-options--inline" 
@@ -462,10 +435,7 @@
             products: {
               payroll: event.selectedOptions == 'true'
             },
-            steps: {
-              step6: false,
-              step7: true
-            }
+            currentStep: 7
           }
         })">
         <div option="true" class="option">
@@ -477,7 +447,7 @@
       </amp-selector>
     </div>
 
-    <div class="step hide" [class]="coreState.steps.step7 ? 'show' : 'hide'">
+    <div class="step hide" [class]="coreState.currentStep == 7 ? 'show' : 'hide'">
       <div class="table-success__home" [class]="coreState.products.home && (+coreState.infos.value) >= 30000 && (+coreState.infos.value) <= 3000000 ? 'show' : 'hide'">
         <h2>Garantia de imóvel</h2>
         <table>

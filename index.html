@@ -204,7 +204,7 @@
       width: calc(50% - .5rem);
       margin: 0;
     }
-    .table-success__home, .table-success__auto, .table-success__payroll{
+    .table-success__home, .table-success__auto, .table-success__payroll, .table-error{
       width:370px;
       margin:0 auto;
       padding:40px 42px;
@@ -216,6 +216,7 @@
     }
     
     table{
+      margin-top:32px;
       width:100%;
       font-size:16px;
       border-collapse: collapse;
@@ -254,6 +255,38 @@
       text-transform: uppercase;
     }
 
+    .btn-reiniciar{
+      width: 100%;
+      height: 48px;
+      border-radius: 8px;
+      border: solid 1px #3377bb;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      background-color:transparent;
+      font-size: 16px;
+      color: #3377bb;
+      font-weight: bold;
+      margin-top:32px;
+      text-transform: uppercase;
+    }
+
+    .btn-descubra{
+      width: 100%;
+      height: 48px;
+      border-radius: 8px;
+      border: solid 1px #3377bb;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      background-color:#3377bb;
+      font-size: 16px;
+      color: #ffffff;
+      font-weight: bold;
+      margin-top:32px;
+      text-transform: uppercase;
+    }
+
     .msg-hello{
       font-size: 16px;
       color: #556666;
@@ -265,7 +298,47 @@
       color: #3377bb;
     }
 
+    .header-success{
+      display:flex;
+      justify-content: space-between;
+      width:100%;
+    }
+
+    .header-success .header-success__img p{
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1.5;
+      text-align: center;
+      color: #556666;
+      text-transform: uppercase;
+    }
+
+    .header-success .header-success__img{
+      margin-top:-16px;
+      text-align: center;
+      
+    }
+
+    .header-success .header-success__txt p{
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.33;
+      color: #556666;
+    }
+
+    .header-success .header-success__txt span{
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1.5;
+      color: #334444;
+      
+    }
+
     @media only screen and (max-width: 767px) {
+
+      .table-success__home, .table-success__auto, .table-success__payroll, .table-error{
+        width:100%;
+      }
       .hero{
         height:424px;
         padding-top:24px;
@@ -350,6 +423,7 @@
   background-color: #ffffff;
   padding-left:16px;
   padding-right:16px;
+  padding-top:16px;
 }
   </style>
   
@@ -559,96 +633,151 @@
       <div class="table-success__home" [class]="coreState.products.home && (+coreState.infos.value) >= 30000 && (+coreState.infos.value) <= 3000000 ? 'show table-success__home' : 'hide table-success__home' ">
         <p class="msg-hello"><span [text]="coreState.infos.name"></span>, o melhor empréstimo para o seu perfil é:</p>
         <div class="box-sucess">
-          <h2>Garantia de imóvel</h2>
+          <div class="header-success">
+              <div class="header-success__img">
+                <amp-img
+                src="https://www.creditas.com.br/static/images/cardProduct-home-dfa1b8c041.svg"
+                width="72"
+                height="72"
+                style="margin:0 auto"
+                ></amp-img>
+                <p>Imovel <br>em garantia</p>
+              </div>
+              <div class="header-success__txt">
+                  <p>Valor do empréstimo</p>
+                <span [text]="coreState.infos.value"></span>
+                <br><br>
+                <p>Juros a partir de</p>
+                <span>0,99% ao mês</span>
+              </div>
+          </div>
+          
           <table>
             <tr>
               <td>
                 <span>60x</span>
               </td>
-              <td [text]="((+coreState.infos.value) * 0.022) + ',00' ">
+              <td [text]="((+coreState.infos.value) * 0.02) ">
               </td>
             </tr>
             <tr>
               <td>
                 <span>120x</span>
               </td>
-              <td [text]="(+coreState.infos.value) * 0.014 + ',00'">
+              <td [text]="(+coreState.infos.value) * 0.014">
               </td>
             </tr>
             <tr>
               <td>
                 <span>180x</span>
               </td>
-              <td [text]="(+coreState.infos.value) * 0.011 + ',00'">
+              <td [text]="(+coreState.infos.value) * 0.011">
               </td>
             </tr>
           </table>
-          <a class="btnSubmit"> Simule agora </a>
+          <a class="btn-descubra" href="https://app.creditas.com.br/emprestimo/garantia-imovel/solicitacao/informacoes-pessoais"> Simule agora </a>
         </div>
-        
+        <a class="btn-reiniciar" href="/">Reiniciar o Quiz</a>
       </div>
 
       <div class="table-success__auto" [class]="coreState.products.auto && ((+coreState.infos.value) >= 5000 && (+coreState.infos.value) <= 150000) && (coreState.products.home == false)  ? 'show table-success__auto' : 'hide table-success__auto'">
         <p class="msg-hello"><span [text]="coreState.infos.name"></span>, o melhor empréstimo para o seu perfil é:</p>
         <div class="box-sucess">
-          <h2>Garantia de veículo</h2>
+          <div class="header-success">
+              <div class="header-success__img">
+                <amp-img
+                src="https://www.creditas.com.br/static/images/cardProduct-home-dfa1b8c041.svg"
+                width="72"
+                height="72"
+                style="margin:0 auto"
+                ></amp-img>
+                <p>Veículo <br>em garantia</p>
+              </div>
+              <div class="header-success__txt">
+                  <p>Valor do empréstimo</p>
+                <span [text]="coreState.infos.value"></span>
+                <br><br>
+                <p>Juros a partir de</p>
+                <span>1,49% ao mês</span>
+              </div>
+          </div>
+          
           <table>
             <tr>
               <td>
                 <span>12x</span>
               </td>
-              <td [text]="((+coreState.infos.value) * 0.091) + ',00' ">
+              <td [text]="((+coreState.infos.value) * 0.091) ">
               </td>
             </tr>
             <tr>
               <td>
                 <span>24x</span>
               </td>
-              <td [text]="((+coreState.infos.value) * 0.049) + ',00' ">
+              <td [text]="(+coreState.infos.value) * 0.049">
               </td>
             </tr>
             <tr>
               <td>
                 <span>36x</span>
               </td>
-              <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
+              <td [text]="(+coreState.infos.value) * 0.036">
               </td>
             </tr>
           </table>
-          <a class="btnSubmit"> Simule agora </a>
+          <a class="btn-descubra" href="https://app.creditas.com.br/steps/emprestimo/garantia-veiculo/solicitacao/informacoes-pessoais"> Simule agora </a>
         </div>
+        <a class="btn-reiniciar" href="/">Reiniciar o Quiz</a>
       </div>
 
       <div class="table-success__payroll" [class]="coreState.products.payroll && (+coreState.infos.value) >= 1000 && (+coreState.infos.value) <= 50000 && coreState.products.home == false && coreState.products.auto == false ? 'show table-success__payroll' : 'hide table-success__payroll'"> 
         <p class="msg-hello"><span [text]="coreState.infos.name"></span>, o melhor empréstimo para o seu perfil é:</p>
         <div class="box-sucess">
-          <h2>Garantia de Salário</h2>
+          <div class="header-success">
+              <div class="header-success__img">
+                <amp-img
+                src="https://www.creditas.com.br/static/images/cardProduct-home-dfa1b8c041.svg"
+                width="72"
+                height="72"
+                style="margin:0 auto"
+                ></amp-img>
+                <p>Salário <br>em garantia</p>
+              </div>
+              <div class="header-success__txt">
+                  <p>Valor do empréstimo</p>
+                <span [text]="coreState.infos.value"></span>
+                <br><br>
+                <p>Juros a partir de</p>
+                <span>1,75% ao mês</span>
+              </div>
+          </div>
+          
           <table>
             <tr>
               <td>
                 <span>6x</span>
               </td>
-              <td [text]="((+coreState.infos.value) * 0.177) + ',00'">
+              <td [text]="((+coreState.infos.value) * 0.177) ">
               </td>
             </tr>
             <tr>
               <td>
                 <span>24x</span>
               </td>
-              <td [text]="((+coreState.infos.value) * 0.049) + ',00'">
+              <td [text]="(+coreState.infos.value) * 0.051">
               </td>
             </tr>
             <tr>
               <td>
                 <span>48x</span>
               </td>
-              <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
+              <td [text]="(+coreState.infos.value) * 0.030">
               </td>
             </tr>
           </table>
-          <a class="btnSubmit"> Simule agora </a>
+          <a class="btn-descubra" href="https://appconsignado.creditas.com.br/occupation"> Simule agora </a>
         </div>
-     
+        <a class="btn-reiniciar" href="/">Reiniciar o Quiz</a>
       </div>
 
       <div class="table-error" [class]="(coreState.products.home == false && coreState.products.auto == false && coreState.products.payroll == false) || ((+coreState.infos.value) < 1000 && (+coreState.infos.value) < 3000001) ? 'show' : 'hide'"> 
@@ -657,6 +786,7 @@
       </div>
     </div>
   </div>
+  
 </body>
 </head>
 </html>

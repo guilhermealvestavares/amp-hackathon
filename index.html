@@ -8,7 +8,6 @@
   <script async src="https://cdn.ampproject.org/v0.js"></script>
   <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
   <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
-  <script async custom-element="amp-script" src="https://cdn.ampproject.org/v0/amp-script-0.1.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Nunito|Nunito+Sans&display=swap" rel="stylesheet">
   <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
   
@@ -250,77 +249,95 @@
   <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 </head>
 <body>
-    <amp-state id="coreState">
-      <script type="application/json">
-        {
-          "infos": {
-            "name": "",
-            "reason": "",
-            "value": 0,
-            "pledgeAuto": "",
-            "pledgeHome": "",
-            "pledgePayroll": ""
-          },
-          "steps": {
-            "step1": true,
-            "step2": false,
-            "step3": false,
-            "step4": false,
-            "step5": false,
-            "step6": false,
-            "step7": false
-          },
-          "products":{
-            "payroll":false,
-            "auto":false,
-            "home":false
-          }
-
+  <amp-state id="coreState">
+    <script type="application/json">
+      {
+        "infos": {
+          "name": "",
+          "reason": "",
+          "value": 0,
+          "pledgeAuto": "",
+          "pledgeHome": "",
+          "pledgePayroll": ""
+        },
+        "steps": {
+          "step0": true,
+          "step1": false,
+          "step2": false,
+          "step3": false,
+          "step4": false,
+          "step5": false,
+          "step6": false,
+          "step7": false
+        },
+        "products":{
+          "payroll":false,
+          "auto":false,
+          "home":false
         }
-      </script>
-    </amp-state>
-    
-    <section class="hero flex-start-center--column">
-      <h1 class="title">Quiz empréstimo Creditas</h1>
-      <h2 class="subtitle">Descubra qual é o melhor empréstimo pra você!</h2>
-      <h3 class="text-description">Vamos te ajudar a encontrar o empréstimo que se encaixa no seu perfil. Responda as perguntas do Quiz e descubra!</h3>
-      <span class="separator"></span>
-      <div class="flex-center-center">
-        <a class="btn-iniciar-quiz">Iniciar o Quiz</a>
-      </div>
-      
-    </section>
 
-    <div class="container flex-column-center-all">
-        <div class="step step-one" [class]="coreState.steps.step1 ? 'show' : 'hide'">
-          <h3 class="step__title">Qual o seu nome?</h3>
-          <input 
-          id="inputName" 
-          name="inputName"
-          on="input-throttled:AMP.setState({
-            coreState: {
-              infos: { 
-                name: event.value
-              }
+      }
+    </script>
+  </amp-state>
+
+  <amp-bind-macro 
+    id="isValidPrice" 
+    arguments="price" 
+    expression="price != '' && (+price) >= 1000 && (+price) <= 3000000">
+  </amp-bind-macro>
+
+  <section class="hero flex-start-center--column">
+    <h1 class="title">Quiz empréstimo Creditas</h1>
+    <h2 class="subtitle">Descubra qual é o melhor empréstimo pra você!</h2>
+    <h3 class="text-description">Vamos te ajudar a encontrar o empréstimo que se encaixa no seu perfil. Responda as perguntas do Quiz e descubra!</h3>
+    <span class="separator"></span>
+    <div class="flex-center-center" [class]="coreState.steps.step0 ? 'show' : 'hide'">
+      <button 
+        type="button"
+        class="btn-iniciar-quiz"
+        on="tap:AMP.setState({
+          coreState: {
+            steps: {
+              step0: false,
+              step1: true,
             }
-          })">
-          <button 
-          class="btnSubmit"
-          on="tap:AMP.setState({
-            coreState: {
-              steps: {
-                step1: coreState.infos.name != '' ? false : true,
-                step2: coreState.infos.name != '' ? true : false,
-              }
+          }
+        })">
+        Iniciar o Quiz
+      </button>
+    </div>
+  </section>
+
+  <div class="container flex-column-center-all">
+    <div class="step step-one hide" [class]="coreState.steps.step1 ? 'show' : 'hide'">
+      <h3 class="step__title">Qual o seu nome?</h3>
+      <input 
+        id="inputName" 
+        name="inputName"
+        on="input-throttled:AMP.setState({
+          coreState: {
+            infos: { 
+              name: event.value
             }
-          })">
-          Próximo
-        </button>
-      </div>
-      
-      <div class="step hide" [class]="coreState.steps.step2 ? 'show' : 'hide'">
-        <h3 class="step__title">Porque?</h3>
-        <amp-selector 
+          }
+        })">
+      <button 
+        class="btnSubmit"
+        on="tap:AMP.setState({
+          coreState: {
+            steps: {
+              step1: coreState.infos.name != '' ? false : true,
+              step2: coreState.infos.name != '' ? true : false,
+            }
+          }
+        })">
+        Próximo
+      </button>
+    </div>
+    
+    <div class="step hide" [class]="coreState.steps.step2 ? 'show' : 'hide'">
+      <h3 class="step__title">Porque?</h3>
+      <amp-selector 
         class="select-options" 
         layout="container"
         on="select:AMP.setState({
@@ -345,6 +362,7 @@
         </div>
       </amp-selector>
     </div>
+
     <div class="step hide" [class]="coreState.steps.step3 ? 'show' : 'hide'">
       <h2 class="step__title">Quanto?</h2>
       <p class="step__help">
@@ -352,142 +370,107 @@
         Ex.: para <span class="highlighted">R$ 10.000,00</span> digite apenas: <span class="highlighted">10000</span>
       </p>
       <input 
-      id="inputValue" 
-      name="inputValue"
-      type="number"
-      min="0"
-      on="input-throttled:AMP.setState({
-        coreState: {
-          infos: { 
-            value: event.value
+        id="inputValue" 
+        name="inputValue"
+        type="number"
+        min="0"
+        on="input-throttled:AMP.setState({
+          coreState: {
+            infos: { 
+              value: event.value
+            }
           }
-        }
-      })">
-      <button 
-      class="btnSubmit"
-      on="tap:AMP.setState({
-        coreState: {
-          steps: {
-            step3: coreState.infos.value != '' ? false : true,
-            step4: coreState.infos.value != '' ? true : false,
-          }
-        }
-      })">
-      Próximo
-    </button>
+        })">
+        <button 
+          class="btnSubmit"
+          on="tap:AMP.setState({
+            coreState: {
+              steps: {
+                step3: isValidPrice(coreState.infos.value) ? false : true,
+                step4: isValidPrice(coreState.infos.value) ? true : false,
+              }
+            }
+          })">
+        Próximo
+        </button>
     </div>
 
     <div class="step hide" [class]="coreState.steps.step4 ? 'show' : 'hide'">
-    <h3 class="step__title">Você tem um carro?</h3>
-    <amp-selector 
-    class="select-options select-options--inline" 
-    layout="container"
-    on="select:AMP.setState({
-      coreState: {
-        products: {
-          auto: event.selectedOptions == 'true'
-        },
-        steps: {
-          step4: false,
-          step5: true
-        }
-      }
-    })">
-    <div option="true" class="option">
-      <span>Sim</span>
-    </div>
-    <div option="false" class="option">
-      <span>Não</span>
-    </div>
-    </amp-selector>
+      <h3 class="step__title">Você tem um carro?</h3>
+      <amp-selector 
+        class="select-options select-options--inline" 
+        layout="container"
+        on="select:AMP.setState({
+          coreState: {
+            products: {
+              auto: event.selectedOptions == 'true'
+            },
+            steps: {
+              step4: false,
+              step5: true
+            }
+          }
+        })">
+        <div option="true" class="option">
+          <span>Sim</span>
+        </div>
+        <div option="false" class="option">
+          <span>Não</span>
+        </div>
+      </amp-selector>
     </div>
 
     <div class="step hide" [class]="coreState.steps.step5 ? 'show' : 'hide'">
-    <h3 class="step__title">Você tem uma casa?</h3>
-    <amp-selector 
-    class="select-options select-options--inline" 
-    layout="container"
-    on="select:AMP.setState({
-      coreState: {
-        products: {
-          home: event.selectedOptions == 'true'
-        },
-        steps: {
-          step5: false,
-          step6: true
-        }
-      }
-    })">
-    <div option="true" class="option">
-      <span>Sim</span>
-    </div>
-    <div option="false" class="option">
-      <span>Não</span>
-    </div>
-    </amp-selector>
+      <h3 class="step__title">Você tem uma casa?</h3>
+      <amp-selector 
+        class="select-options select-options--inline" 
+        layout="container"
+        on="select:AMP.setState({
+          coreState: {
+            products: {
+              home: event.selectedOptions == 'true'
+            },
+            steps: {
+              step5: false,
+              step6: true
+            }
+          }
+        })">
+        <div option="true" class="option">
+          <span>Sim</span>
+        </div>
+        <div option="false" class="option">
+          <span>Não</span>
+        </div>
+      </amp-selector>
     </div>
 
     <div class="step hide" [class]="coreState.steps.step6 ? 'show' : 'hide'">
-    <h3 class="step__title">Você trabalha em empresa privada?</h3>
-    <amp-selector 
-    class="select-options select-options--inline" 
-    layout="container"
-    on="select:AMP.setState({
-      coreState: {
-        products: {
-          payroll: event.selectedOptions == 'true'
-        },
-        steps: {
-          step6: false,
-          step7: true
-        }
-      }
-    })">
-    <div option="true" class="option">
-      <span>Sim</span>
-    </div>
-    <div option="false" class="option">
-      <span>Não</span>
-    </div>
-    </amp-selector>
+      <h3 class="step__title">Você trabalha em empresa privada?</h3>
+      <amp-selector 
+        class="select-options select-options--inline" 
+        layout="container"
+        on="select:AMP.setState({
+          coreState: {
+            products: {
+              payroll: event.selectedOptions == 'true'
+            },
+            steps: {
+              step6: false,
+              step7: true
+            }
+          }
+        })">
+        <div option="true" class="option">
+          <span>Sim</span>
+        </div>
+        <div option="false" class="option">
+          <span>Não</span>
+        </div>
+      </amp-selector>
     </div>
 
     <div class="step hide" [class]="coreState.steps.step7 ? 'show' : 'hide'">
-    <strong>Resultado Final</strong>
-    </div>
-
-    <div style="font-size: 12px; display:none;">
-    <br>
-    <strong>STATE do Quiz</strong>
-    <div>Nome: <span id="name" [text]="coreState.infos.name"></span></div>
-    <div>Motivo: <span [text]="coreState.infos.reason"></span></div>
-    <div>Valor: <span [text]="coreState.infos.value"></span></div>
-    <div>Tem carro? <span [text]="coreState.products.auto ? 'Sim' : 'Não'"></span></div>
-    <div>Tem casa? <span [text]="coreState.products.home ? 'Sim' : 'Não'"></span></div>
-    <div>Trabalha em empresa privada? <span [text]="coreState.products.payroll ? 'Sim' : 'Não'"></span></div>
-
-    <br>
-    <hr>
-    <br>
-
-    <strong>Primeiro Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step1"></span></div>
-    <br>
-    <strong>Segundo Step</strong> <div>Exibir Step?: <span  [text]="coreState.steps.step2"></span></div>
-    <br>
-    <strong>Terceiro Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step3"></span></div>
-    <br>
-    <strong>Quarto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step4"></span></div>
-    <br>
-    <strong>Quinto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step5"></span></div>
-    <br>
-    <strong>Sexto Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step6"></span></div>
-    <br>
-    <strong>Sétimo Step</strong> <div>Exibir Step?: <span [text]="coreState.steps.step7"></span></div>
-
-    <br><br>
-    </div>
-
-      <div class="step hide" [class]="coreState.steps.step7 ? 'show' : 'hide'">
       <div class="table-success__home" [class]="coreState.products.home && (+coreState.infos.value) >= 30000 && (+coreState.infos.value) <= 3000000 ? 'show' : 'hide'">
         <h2>Garantia de imóvel</h2>
         <table>
@@ -496,7 +479,6 @@
               <span>60x</span>
             </td>
             <td [text]="((+coreState.infos.value) * 0.022) + ',00' ">
-              
             </td>
           </tr>
           <tr>
@@ -514,85 +496,71 @@
             </td>
           </tr>
         </table>
-        <a
-        class="btnSubmit">
-        Simule agora
-      </a>
+        <a class="btnSubmit"> Simule agora </a>
       </div>
 
       <div class="table-success__auto" [class]="coreState.products.auto && ((+coreState.infos.value) >= 5000 && (+coreState.infos.value) <= 150000) && (coreState.products.home == false)  ? 'show' : 'hide'">
-      <h2>Garantia de veículo</h2>
-      <table>
-        <tr>
-          <td>
-            <span>12x</span>
-          </td>
-          <td [text]="((+coreState.infos.value) * 0.091) + ',00' ">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span>24x</span>
-          </td>
-          <td [text]="((+coreState.infos.value) * 0.049) + ',00' ">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span>36x</span>
-          </td>
-          <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
-          </td>
-        </tr>
-      </table>
-      <a
-      class="btnSubmit">
-      Simule agora
-      </a>
+        <h2>Garantia de veículo</h2>
+        <table>
+          <tr>
+            <td>
+              <span>12x</span>
+            </td>
+            <td [text]="((+coreState.infos.value) * 0.091) + ',00' ">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>24x</span>
+            </td>
+            <td [text]="((+coreState.infos.value) * 0.049) + ',00' ">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>36x</span>
+            </td>
+            <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
+            </td>
+          </tr>
+        </table>
+        <a class="btnSubmit"> Simule agora </a>
       </div>
 
       <div class="table-success__payroll" [class]="coreState.products.payroll && (+coreState.infos.value) >= 1000 && (+coreState.infos.value) <= 50000 && coreState.products.home == false && coreState.products.auto == false ? 'show' : 'hide'"> 
-      <h2>Garantia de Salário</h2>
-      <table>
-        <tr>
-          <td>
-            <span>6x</span>
-          </td>
-          <td [text]="((+coreState.infos.value) * 0.177) + ',00'">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span>24x</span>
-          </td>
-          <td [text]="((+coreState.infos.value) * 0.049) + ',00'">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span>48x</span>
-          </td>
-          <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
-          </td>
-        </tr>
-      </table>
-      <a
-      class="btnSubmit">
-      Simule agora
-      </a>
+        <h2>Garantia de Salário</h2>
+        <table>
+          <tr>
+            <td>
+              <span>6x</span>
+            </td>
+            <td [text]="((+coreState.infos.value) * 0.177) + ',00'">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>24x</span>
+            </td>
+            <td [text]="((+coreState.infos.value) * 0.049) + ',00'">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>48x</span>
+            </td>
+            <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
+            </td>
+          </tr>
+        </table>
+        <a class="btnSubmit"> Simule agora </a>
       </div>
 
       <div class="table-error" [class]="(coreState.products.home == false && coreState.products.auto == false && coreState.products.payroll == false) || ((+coreState.infos.value) < 1000 && (+coreState.infos.value) < 3000001) ? 'show' : 'hide'"> 
         <h2>Não temos nem um produto para o seu perfil</h2>
-        <a
-        class="btnSubmit">
-        Simule novamente
-        </a>
-        </div>
+        <a class="btnSubmit"> Simule novamente </a>
       </div>
-    
     </div>
-
+  </div>
 </body>
 </head>
 </html>

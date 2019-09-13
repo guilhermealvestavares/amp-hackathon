@@ -14,7 +14,6 @@
   <style amp-custom>
     * {
       font-family: 'Nunito', sans-serif;
-      color: #4a4a4a;
       box-sizing: border-box;
       margin:0;
     }
@@ -22,14 +21,18 @@
     .showResults{display:block;}
     .container{
       width: 100%;
-      max-width: 320px;
+      max-width: 1440px;
       padding: 0 1.5em;
       margin:0 auto;
     } 
 
+    .container-full{
+      padding: 0 1.5em;
+    }
+
     .hero{
       padding-top: 90px;
-      height: 703px;
+      height: 631px;
       width:100%;
       background-color: #11bb77;
     }
@@ -44,11 +47,15 @@
     }
 
     .subtitle{
-      width: 1178px;
+      width: 100%;
       font-size: 72px;
       font-weight: bold;
       line-height: 1.11;
       color: #ffffff;
+    }
+
+    .subtitle span{
+      display:block;
     }
 
     .text-description{
@@ -74,6 +81,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      width:100%;
     }
     .flex-start-center--column{
       display:flex;
@@ -91,7 +99,7 @@
     }
     
     .btn-iniciar-quiz{
-      width: 280px;
+      width: 370px;
       height: 48px;
       border-radius: 8px;
       background-color: #3377bb;
@@ -101,17 +109,14 @@
       color: #ffffff;
       font-weight: bold;
       text-transform:uppercase;
-      display:none;
+      display:flex;
     }
 
-    .step-one{
-      margin-top:-50px;
-    }
-
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 767px) {
       
       .hero{
-        height:90vh;
+        height:424px;
+        padding-top:24px;
       }
 
       .title{
@@ -122,6 +127,10 @@
         width:300px;
         font-size:32px;
       }
+      .subtitle span{
+      display:inline;
+      color:#ffffff;
+    }
       .text-description{
         margin-top:16px;
         width:280px;
@@ -135,9 +144,11 @@
         align-items: flex-start;
         text-align: left;
       }
+
       .btn-iniciar-quiz{
-        display:flex;
+        width: 100%;
       }
+    
     }
 
     input{
@@ -241,9 +252,6 @@
     table td span{
       font-weight: 600;
     }
-
-    
-
   </style>
   
   <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
@@ -275,7 +283,6 @@
           "auto":false,
           "home":false
         }
-
       }
     </script>
   </amp-state>
@@ -286,12 +293,12 @@
     expression="price != '' && (+price) >= 1000 && (+price) <= 3000000">
   </amp-bind-macro>
 
-  <section class="hero flex-start-center--column">
+  <section class="hero container-full flex-start-center--column">
     <h1 class="title">Quiz empréstimo Creditas</h1>
     <h2 class="subtitle">Descubra qual é o melhor empréstimo pra você!</h2>
     <h3 class="text-description">Vamos te ajudar a encontrar o empréstimo que se encaixa no seu perfil. Responda as perguntas do Quiz e descubra!</h3>
     <span class="separator"></span>
-    <div class="flex-center-center" [class]="coreState.steps.step0 ? 'show' : 'hide'">
+    <div class="flex-center-center" [class]="coreState.steps.step0 ? 'flex-center-center show' : 'flex-center-center hide'">
       <button 
         type="button"
         class="btn-iniciar-quiz"
@@ -309,7 +316,7 @@
   </section>
 
   <div class="container flex-column-center-all">
-    <div class="step step-one hide" [class]="coreState.steps.step1 ? 'show' : 'hide'">
+    <div class="step hide" [class]="coreState.steps.step1 ? 'step show' : 'step hide'">
       <h3 class="step__title">Qual o seu nome?</h3>
       <input 
         id="inputName" 
@@ -335,7 +342,7 @@
       </button>
     </div>
     
-    <div class="step hide" [class]="coreState.steps.step2 ? 'show' : 'hide'">
+    <div class="step hide" [class]="coreState.steps.step2 ? 'step show' : 'step hide'">
       <h3 class="step__title">Porque?</h3>
       <amp-selector 
         class="select-options" 
@@ -363,7 +370,7 @@
       </amp-selector>
     </div>
 
-    <div class="step hide" [class]="coreState.steps.step3 ? 'show' : 'hide'">
+    <div class="step hide" [class]="coreState.steps.step3 ? 'step show' : 'step hide'">
       <h2 class="step__title">Quanto?</h2>
       <p class="step__help">
         Digite o valor sem os centávos.<br>
@@ -395,7 +402,7 @@
         </button>
     </div>
 
-    <div class="step hide" [class]="coreState.steps.step4 ? 'show' : 'hide'">
+    <div class="step hide" [class]="coreState.steps.step4 ? 'step show' : 'step hide'">
       <h3 class="step__title">Você tem um carro?</h3>
       <amp-selector 
         class="select-options select-options--inline" 
@@ -420,7 +427,7 @@
       </amp-selector>
     </div>
 
-    <div class="step hide" [class]="coreState.steps.step5 ? 'show' : 'hide'">
+    <div class="step hide" [class]="coreState.steps.step5 ? 'step show' : 'step hide'">
       <h3 class="step__title">Você tem uma casa?</h3>
       <amp-selector 
         class="select-options select-options--inline" 
@@ -445,7 +452,7 @@
       </amp-selector>
     </div>
 
-    <div class="step hide" [class]="coreState.steps.step6 ? 'show' : 'hide'">
+    <div class="step hide" [class]="coreState.steps.step6 ? 'step show' : 'step hide'">
       <h3 class="step__title">Você trabalha em empresa privada?</h3>
       <amp-selector 
         class="select-options select-options--inline" 

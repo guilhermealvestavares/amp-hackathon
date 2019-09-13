@@ -639,7 +639,7 @@
 
     <div class="step hide" [class]="coreState.currentStep == 7 ? 'show' : 'hide'">
       <div class="table-success__home hide" [class]="coreState.products.home == true && coreState.infos.value >= 30000 && coreState.infos.value <= 3000000 ? 'table-success__home show' : 'table-success__home hide'">
-        <p class="msg-hello"><span [text]="coreState.infos.name"></span>, nossas melhores opções de empréstimo para você:</p>
+        <p class="msg-hello"><span [text]="coreState.infos.name"></span>, o melhor empréstimo para o seu perfil é:</p>
         <div class="box-sucess">
           <div class="header-success">
               <div class="header-success__img">
@@ -697,6 +697,7 @@
       </div>
 
       <div class="table-success__auto hide" [class]="coreState.products.auto == true && coreState.infos.value >= 5000 && coreState.infos.value <= 150000 ? 'table-success__auto show' : 'table-success__auto hide'">
+        <p class="msg-hello"><span [text]="coreState.infos.name"></span>, o melhor empréstimo para o seu perfil é:</p>
         <div class="box-sucess">
           <div class="header-success">
               <div class="header-success__img">
@@ -754,6 +755,7 @@
       </div>
 
       <div class="table-success__payroll hide" [class]="coreState.products.payroll == true && coreState.infos.value >= 1000 && coreState.infos.value <= 50000 ? 'table-success__payroll show' : 'table-success__payroll hide'"> 
+        <p class="msg-hello"><span [text]="coreState.infos.name"></span>, o melhor empréstimo para o seu perfil é:</p>
         <div class="box-sucess">
           <div class="header-success">
               <div class="header-success__img">

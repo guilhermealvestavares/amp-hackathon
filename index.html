@@ -157,13 +157,13 @@
       margin-top:-100px;
     }
     .step__title{
-      font-family: Work Sans,sans-serif;
+      width: 213.3px;
+      height: 16px;
       font-size: 12px;
-      font-weight: 500;
-      line-height: 16px;
+      font-weight: bold;
+      color: #4a4a4a;
       text-transform: uppercase;
-      text-align: left;
-      margin-bottom: .5rem;
+      margin-bottom:10px;
     }
     .step__help {
       font-size: 10px;
@@ -257,7 +257,7 @@
     .msg-hello{
       font-size: 16px;
       color: #556666;
-      margin-top:16px;
+      margin-bottom:16px;
     }
 
     .msg-hello span{
@@ -305,6 +305,42 @@
         width:280px;
       }
     }
+    .field-group__choice {
+  position: relative;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-align: center;
+      align-items: center;
+  border-radius: 0.125rem;
+  padding: 0.75rem;
+  background-color: #fff;
+}
+
+.field-group__choice input[type="radio"] ~ .field-group__choice-control {
+  border-radius: 100%;
+}
+.field-group__choice input[type="radio"] ~ .field-group__choice-control:before {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 100%;
+  border: 5px solid;
+}
+.field-group__choice input[type="radio"]:not(:checked) ~ .field-group__choice-control:before {
+  border-color: transparent;
+}
+.field-group__choice input[type="checkbox"] ~ .field-group__choice-control:before {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%) rotate(-40deg);
+  width: 70%;
+  height: 50%;
+  border: 3px solid transparent;
+}
+.field-group__choice input[type="checkbox"]:checked ~ .field-group__choice-control:before {
+  border-bottom-color: inherit;
+  border-left-color: inherit;
+}
   </style>
   
   <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
@@ -385,7 +421,7 @@
     </div>
     
     <div class="step hide" [class]="coreState.currentStep == 2 ? 'step show' : 'step hide'">
-      <h3 class="step__title">Porque?</h3>
+      <h3 class="step__title">Por qual motivo você precisa do empréstimo?</h3>
       <amp-selector 
         class="select-options" 
         layout="container"
@@ -411,7 +447,7 @@
     </div>
 
     <div class="step hide" [class]="coreState.currentStep == 3 ? 'step show' : 'step hide'">
-      <p class="msg-hello">Olá <span>teste</span></p>
+      <p class="msg-hello">Olá <span [text]="coreState.infos.name"></span>,</p>
       <h2 class="step__title">De quanto você precisa?</h2>
       <input 
         id="inputValue" 
@@ -461,6 +497,7 @@
         <div option="false" class="option">
           <span>Não</span>
         </div>
+        
       </amp-selector>
     </div>
 

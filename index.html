@@ -205,14 +205,14 @@
       margin: 0;
     }
     .table-success__home, .table-success__auto, .table-success__payroll{
-      background: #fff;
+      width:370px;
+      margin:0 auto;
+      padding:40px 42px;
       border-radius: 5px;
-      border: 1px solid hsla(240,8%,57%,.2);
-      box-shadow: 0 10px 25px 0 hsla(240,8%,57%,.25);
-      width: 100%;
-      min-height: 120px;
-      margin: 1.5rem 0;
-      padding:1.5rem;
+      box-shadow: 0 10px 25px 0 rgba(136, 136, 153, 0.25);
+      border: solid 1px rgba(136, 136, 153, 0.2);
+      background-color: #ffffff;
+      margin-top:-100px;
     }
     
     table{
@@ -222,7 +222,7 @@
     }
     
     table td{
-      border: 1px solid hsla(240,8%,57%,.2);
+      border-bottom: 1px solid hsla(240,8%,57%,.2);
       height:48px;
       text-align: center;
     }
@@ -340,6 +340,16 @@
 .field-group__choice input[type="checkbox"]:checked ~ .field-group__choice-control:before {
   border-bottom-color: inherit;
   border-left-color: inherit;
+}
+
+.box-sucess{
+  margin:0 -25px;
+  padding-bottom:16px;
+  border-radius: 4px;
+  border: solid 1px #eeeeee;
+  background-color: #ffffff;
+  padding-left:16px;
+  padding-right:16px;
 }
   </style>
   
@@ -546,88 +556,99 @@
     </div>
 
     <div class="step hide" [class]="coreState.currentStep == 7 ? 'show' : 'hide'">
-      <div class="table-success__home" [class]="coreState.products.home && (+coreState.infos.value) >= 30000 && (+coreState.infos.value) <= 3000000 ? 'show' : 'hide'">
-        <h2>Garantia de imóvel</h2>
-        <table>
-          <tr>
-            <td>
-              <span>60x</span>
-            </td>
-            <td [text]="((+coreState.infos.value) * 0.022) + ',00' ">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>120x</span>
-            </td>
-            <td [text]="(+coreState.infos.value) * 0.014 + ',00'">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>180x</span>
-            </td>
-            <td [text]="(+coreState.infos.value) * 0.011 + ',00'">
-            </td>
-          </tr>
-        </table>
-        <a class="btnSubmit"> Simule agora </a>
+      <div class="table-success__home" [class]="coreState.products.home && (+coreState.infos.value) >= 30000 && (+coreState.infos.value) <= 3000000 ? 'show table-success__home' : 'hide table-success__home' ">
+        <p class="msg-hello"><span [text]="coreState.infos.name"></span>, o melhor empréstimo para o seu perfil é:</p>
+        <div class="box-sucess">
+          <h2>Garantia de imóvel</h2>
+          <table>
+            <tr>
+              <td>
+                <span>60x</span>
+              </td>
+              <td [text]="((+coreState.infos.value) * 0.022) + ',00' ">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span>120x</span>
+              </td>
+              <td [text]="(+coreState.infos.value) * 0.014 + ',00'">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span>180x</span>
+              </td>
+              <td [text]="(+coreState.infos.value) * 0.011 + ',00'">
+              </td>
+            </tr>
+          </table>
+          <a class="btnSubmit"> Simule agora </a>
+        </div>
+        
       </div>
 
-      <div class="table-success__auto" [class]="coreState.products.auto && ((+coreState.infos.value) >= 5000 && (+coreState.infos.value) <= 150000) && (coreState.products.home == false)  ? 'show' : 'hide'">
-        <h2>Garantia de veículo</h2>
-        <table>
-          <tr>
-            <td>
-              <span>12x</span>
-            </td>
-            <td [text]="((+coreState.infos.value) * 0.091) + ',00' ">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>24x</span>
-            </td>
-            <td [text]="((+coreState.infos.value) * 0.049) + ',00' ">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>36x</span>
-            </td>
-            <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
-            </td>
-          </tr>
-        </table>
-        <a class="btnSubmit"> Simule agora </a>
+      <div class="table-success__auto" [class]="coreState.products.auto && ((+coreState.infos.value) >= 5000 && (+coreState.infos.value) <= 150000) && (coreState.products.home == false)  ? 'show table-success__auto' : 'hide table-success__auto'">
+        <p class="msg-hello"><span [text]="coreState.infos.name"></span>, o melhor empréstimo para o seu perfil é:</p>
+        <div class="box-sucess">
+          <h2>Garantia de veículo</h2>
+          <table>
+            <tr>
+              <td>
+                <span>12x</span>
+              </td>
+              <td [text]="((+coreState.infos.value) * 0.091) + ',00' ">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span>24x</span>
+              </td>
+              <td [text]="((+coreState.infos.value) * 0.049) + ',00' ">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span>36x</span>
+              </td>
+              <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
+              </td>
+            </tr>
+          </table>
+          <a class="btnSubmit"> Simule agora </a>
+        </div>
       </div>
 
-      <div class="table-success__payroll" [class]="coreState.products.payroll && (+coreState.infos.value) >= 1000 && (+coreState.infos.value) <= 50000 && coreState.products.home == false && coreState.products.auto == false ? 'show' : 'hide'"> 
-        <h2>Garantia de Salário</h2>
-        <table>
-          <tr>
-            <td>
-              <span>6x</span>
-            </td>
-            <td [text]="((+coreState.infos.value) * 0.177) + ',00'">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>24x</span>
-            </td>
-            <td [text]="((+coreState.infos.value) * 0.049) + ',00'">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>48x</span>
-            </td>
-            <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
-            </td>
-          </tr>
-        </table>
-        <a class="btnSubmit"> Simule agora </a>
+      <div class="table-success__payroll" [class]="coreState.products.payroll && (+coreState.infos.value) >= 1000 && (+coreState.infos.value) <= 50000 && coreState.products.home == false && coreState.products.auto == false ? 'show table-success__payroll' : 'hide table-success__payroll'"> 
+        <p class="msg-hello"><span [text]="coreState.infos.name"></span>, o melhor empréstimo para o seu perfil é:</p>
+        <div class="box-sucess">
+          <h2>Garantia de Salário</h2>
+          <table>
+            <tr>
+              <td>
+                <span>6x</span>
+              </td>
+              <td [text]="((+coreState.infos.value) * 0.177) + ',00'">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span>24x</span>
+              </td>
+              <td [text]="((+coreState.infos.value) * 0.049) + ',00'">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span>48x</span>
+              </td>
+              <td [text]="((+coreState.infos.value) * 0.036) + ',00'">
+              </td>
+            </tr>
+          </table>
+          <a class="btnSubmit"> Simule agora </a>
+        </div>
+     
       </div>
 
       <div class="table-error" [class]="(coreState.products.home == false && coreState.products.auto == false && coreState.products.payroll == false) || ((+coreState.infos.value) < 1000 && (+coreState.infos.value) < 3000001) ? 'show' : 'hide'"> 

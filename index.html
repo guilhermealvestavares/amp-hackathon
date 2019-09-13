@@ -15,7 +15,6 @@
   <style amp-custom>
     * {
       font-family: 'Nunito', sans-serif;
-      color: #4a4a4a;
       box-sizing: border-box;
       margin:0;
     }
@@ -23,14 +22,18 @@
     .showResults{display:block;}
     .container{
       width: 100%;
-      max-width: 320px;
+      max-width: 1440px;
       padding: 0 1.5em;
       margin:0 auto;
     } 
 
+    .container-full{
+      padding: 0 1.5em;
+    }
+
     .hero{
       padding-top: 90px;
-      height: 703px;
+      height: 631px;
       width:100%;
       background-color: #11bb77;
     }
@@ -45,11 +48,15 @@
     }
 
     .subtitle{
-      width: 1178px;
+      width: 100%;
       font-size: 72px;
       font-weight: bold;
       line-height: 1.11;
       color: #ffffff;
+    }
+
+    .subtitle span{
+      display:block;
     }
 
     .text-description{
@@ -75,6 +82,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      width:100%;
     }
     .flex-start-center--column{
       display:flex;
@@ -92,7 +100,7 @@
     }
     
     .btn-iniciar-quiz{
-      width: 280px;
+      width: 370px;
       height: 48px;
       border-radius: 8px;
       background-color: #3377bb;
@@ -102,17 +110,14 @@
       color: #ffffff;
       font-weight: bold;
       text-transform:uppercase;
-      display:none;
+      display:flex;
     }
 
-    .step-one{
-      margin-top:-50px;
-    }
-
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 767px) {
       
       .hero{
-        height:90vh;
+        height:424px;
+        padding-top:24px;
       }
 
       .title{
@@ -123,6 +128,10 @@
         width:300px;
         font-size:32px;
       }
+      .subtitle span{
+      display:inline;
+      color:#ffffff;
+    }
       .text-description{
         margin-top:16px;
         width:280px;
@@ -136,9 +145,11 @@
         align-items: flex-start;
         text-align: left;
       }
+
       .btn-iniciar-quiz{
-        display:flex;
+        width: 100%;
       }
+    
     }
 
     input{
@@ -280,15 +291,16 @@
       </script>
     </amp-state>
     
-    <section class="hero flex-start-center--column">
-      <h1 class="title">Quiz empréstimo Creditas</h1>
-      <h2 class="subtitle">Descubra qual é o melhor empréstimo pra você!</h2>
-      <h3 class="text-description">Vamos te ajudar a encontrar o empréstimo que se encaixa no seu perfil. Responda as perguntas do Quiz e descubra!</h3>
-      <span class="separator"></span>
-      <div class="flex-center-center">
-        <a class="btn-iniciar-quiz">Iniciar o Quiz</a>
-      </div>
-      
+    <section class="hero container-full flex-start-center--column">
+     
+        <h1 class="title">Quiz empréstimo Creditas</h1>
+        <h2 class="subtitle">Descubra qual é o melhor <span> empréstimo pra você!</span></h2>
+        <h3 class="text-description">Vamos te ajudar a encontrar o empréstimo que se encaixa no seu perfil. Responda as perguntas do Quiz e descubra!</h3>
+        <span class="separator"></span>
+        <div class="flex-center-center">
+          <a class="btn-iniciar-quiz">Iniciar o Quiz</a>
+        </div>
+     
     </section>
 
     <div class="container flex-column-center-all">
